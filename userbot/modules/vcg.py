@@ -187,10 +187,10 @@ CMD_HELP.update(
         \n   : **Untuk Mengubah title/judul voice chat group\
         \n\n   :** `{cmd}vcinvite`\
         \n   : **Mengundang Member group ke voice chat group\
-        \n\n  »  **Perintah :** `{cmd}joinvc` atau `{cmd}joinvc` <chatid/username gc>\
-        \n  »  **Kegunaan : **Untuk Bergabung ke voice chat group\
-        \n\n  »  **Perintah :** `{cmd}leavevc` atau `{cmd}leavevc` <chatid/username gc>\
-        \n  »  **Kegunaan : **Untuk Turun dari voice chat group\
+        \n\n   :** `{cmd}joinvc` atau `{cmd}joinvc` <chatid/username gc>\
+        \n   : **Untuk Bergabung ke voice chat group\
+        \n\n   :** `{cmd}leavevc` atau `{cmd}leavevc` <chatid/username gc>\
+        \n   : **Untuk Turun dari voice chat group\
     "
     }
 )
